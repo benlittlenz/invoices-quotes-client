@@ -22,3 +22,102 @@ body {
         line-height: 14px;
     }
 }
+
+.item-body {
+
+            td:first-child {
+                padding-left: 0 !important;
+            }
+
+            td:last-child {
+                padding-right: 0 !important;
+            }
+
+            .item-row {
+                background: #FFFFFF;
+                border: 1px solid gray;
+                box-sizing: border-box;
+                border-radius: 0px 0px 5px 5px;
+
+                td {
+                    padding: 15px 20px;
+                    text-align: left;
+                    vertical-align: top;
+                }
+
+                > td {
+                    padding: 0;
+                }
+
+                .item-select {
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 14px;
+                    line-height: 20px;
+                    color: gray;
+                    overflow: auto !important;
+                    max-height: 250px !important;
+                }
+
+                .search-select .selector-menu {
+                    top: 45px !important;
+                }
+
+                .main {
+                    padding: 0 !important;
+                }
+
+                .item-amount {
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-end;
+                }
+
+                .item-select-wrapper {
+                    display: flex;
+                    justify-content: flex-start;
+                }
+
+                .item-selector {
+                    flex: 1;
+                }
+
+                .selected-item {
+                    display: flex;
+                    align-items: center;
+                    height: 40px;
+                    padding-left: 10px;
+                    border: 1px solid gray;
+                    background: gray;
+                    border-radius: 5px;
+                    position: relative;
+                }
+
+                .deselect-icon {
+                    color: gray;
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    cursor: pointer;
+                }
+
+                .sort-icon-wrapper,
+                .remove-icon-wrapper {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    margin: 0 15px;
+                    height: 40px;
+                    width: 20px;
+                    cursor: pointer;
+                }
+
+                .sort-icon-wrapper {
+                    color: gray;
+                    height: 20px;
+                    margin-top: 8px;
+                    cursor: move;
+                }
+
+            }
+        }

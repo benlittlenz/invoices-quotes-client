@@ -125,15 +125,18 @@
 			<div class="px-1 w-20 text-center">
 			</div>
 		</div>
-	    <Item
-			v-for="(item, index) in invoiceItems"
-			:key="item.id"
-			:index="index"
-			:item-data="item"
-			:invoice-items="invoiceItems"
-			@update="updateItem"
-		>
-		</Item>
+		<draggable v-model="invoiceItems">
+			<Item
+				v-for="(item, index) in invoiceItems"
+				:key="item.id"
+				:index="index"
+				:item-data="item"
+				:invoice-items="invoiceItems"
+				@update="updateItem"
+				@remove="removeItem"
+			/>
+		</draggable>
+	    
 		<button 
             class="mt-6 bg-white hover:bg-gray-100 text-gray-700 font-semibold py-2 px-4 text-sm border border-gray-300 rounded shadow-sm" 
             @click="addItem">
@@ -287,6 +290,7 @@
 
 	<script>
 	import axios from 'axios'
+	import draggable from 'vuedraggable'
   	import { mapGetters, mapActions } from 'vuex'
 	import Guid from 'guid'
 	import InvoiceStub from '../../../stub/invoice'
@@ -295,7 +299,8 @@
 
     export default {
         components: {
-			Item
+			Item,
+			draggable
         },
 
         data() {
@@ -342,12 +347,15 @@
                     ...InvoiceStub,
 					id: Guid.raw()
                 })
-				
             },
 
 			updateItem (data) {
 				console.log('update', data)
 				Object.assign(this.invoiceItems[data.index], {...data.item})
+			},
+
+			removeItem (index) {
+				this.invoiceItems.splice(index, 1)
 			},
 
 			onValueSelect(value) {

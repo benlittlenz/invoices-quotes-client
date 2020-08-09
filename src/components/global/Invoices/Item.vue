@@ -1,34 +1,28 @@
 <template>
-    <div>
-        <template>
-			<div class="flex -mx-1 py-2 border-b">
-				<div class="flex-1 px-1">
-					<div class="">
-                        <VueSelect :data="items" v-model="selectedValue" v-on:valueSelect="onValueSelect">
+    <div class="flex -mx-1 py-2 border-b">
+        <div class="flex-1 px-1">
+            <div class="">
+                <VueSelect :data="items" v-model="selectedValue" v-on:valueSelect="onValueSelect">
 
-                        </VueSelect>
-                    </div>
-				</div>
+                </VueSelect>
+            </div>
+        </div>
 
-				<div class="px-1 w-20 text-right">
-					<p class="text-gray-800" x-text="invoice.qty"></p>
-				</div>
+        <div class="px-1 w-20 text-right">
+            <p class="text-gray-800">{{item.unit}}</p>
+        </div>
 
-				<div class="px-1 w-32 text-right">
-					<p class="text-gray-800" x-text="numberFormat(invoice.rate)"></p>
-				</div>
+        <div class="px-1 w-32 text-right">
+            <p class="text-gray-800">{{item.price}}</p>
+        </div>
 
-				<div class="px-1 w-32 text-right">
-					<p class="text-gray-800" x-text="numberFormat(invoice.total)"></p>
-				</div>
+        <div class="px-1 w-32 text-right">
+            <p class="text-gray-800"</p>
+        </div>
 
-				<div class="px-1 w-20 text-right">
-					<a href="#" class="text-red-500 hover:text-red-600 text-sm font-semibold" @click.prevent="deleteItem(invoice.id)">Delete</a>
-				</div>
-			</div>
-		</template>
-
-        
+        <div class="px-1 w-20 text-right">
+            <a href="#" class="text-red-500 hover:text-red-600 text-sm font-semibold" @click="removeItem">Delete</a>
+        </div>
     </div>
 </template>
 
@@ -78,6 +72,7 @@ export default {
             this.item.price = value.price
             this.item.item_id = value.id
             this.item.description = value.description
+            this.item.unit = value.unit
 
             this.$emit('itemSelected', value);
 
@@ -94,6 +89,10 @@ export default {
                     ...this.item,
                 }
             })
+        },
+
+        removeItem () {
+            this.$emit('remove', this.index)
         },
     },
 
