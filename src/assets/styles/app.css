@@ -10,14 +10,14 @@ body {
     display: flex;
     width: 100%;
     padding: 13px 10px;
-    background: gray;
     justify-content: center;
+    color: white;
     border: none;
     outline: none;
     align-items: center;
 
     label {
-        font-size: 14px;
+        font-weight: 800;
         margin: 0 0 0 10px !important;
         line-height: 14px;
     }

@@ -8,12 +8,7 @@
       class="flex flex-col "
     >
 
-    <div class="max-w-xs mx-auto">
-    kjhjkhjk
-      <VueSelect :data="wrestlers" v-model="selectedWrestler" v-on:valueSelect="onValueSelect">
-        <template v-slot:SelectLabel>Wrestlers</template>
-      </VueSelect>
-    </div>
+    
 
 
 

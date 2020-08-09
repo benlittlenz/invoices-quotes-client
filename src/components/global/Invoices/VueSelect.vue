@@ -7,7 +7,6 @@
       <span class="inline-block w-full rounded-md shadow-sm">
         <button type="button" @click="openDropdown" aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label" class="cursor-pointer relative w-full rounded-md border border-gray-300 bg-white pl-3 pr-10 py-2 text-left focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition ease-in-out duration-150 sm:text-sm sm:leading-5">
           <div class="flex items-center space-x-3">
-            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" class="flex-shrink-0 h-6 w-6 rounded-full" />
             <span class="block truncate">
               {{ value }}
             </span>
@@ -33,11 +32,18 @@
             Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
             Highlighted: "text-white bg-indigo-600", Not Highlighted: "text-gray-900"
           -->
-          <li tabindex="0" @click="select(d)" id="listbox-item-0" role="option" v-for="d in data" v-bind:key="d" class="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9  cursor-pointer hover:text-white hover:bg-indigo-600 focus:outline-none focus:text-white focus:bg-indigo-600">
+          <li 
+            tabindex="0" 
+            @click="select(d)" 
+            id="listbox-item-0" 
+            role="option" 
+            v-for="d in data" 
+            v-bind:key="d.id" 
+            class="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9  cursor-pointer hover:text-white hover:bg-indigo-600 focus:outline-none focus:text-white focus:bg-indigo-600">
             <div class="flex items-center space-x-3">
               <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
-              <span class="block truncate" v-bind:class="{ 'font-normal' : !isSelected(d) , 'font-semibold' : isSelected(d)}">
-                {{ d }}
+              <span class="block truncate" v-bind:class="{ 'font-normal' : !isSelected(d.name) , 'font-semibold' : isSelected(d.name)}">
+                {{ d.name }}
               </span>
             </div>
 
@@ -55,8 +61,8 @@
           <!-- More options... -->
         </ul>
         <div v-show="isOpen" slot="afterList">
-        <button type="button" class="list-add-button">
-          <label>add item</label>
+        <button type="button" class="list-add-button bg-indigo-600">
+          <label class="font-lg">Add Item</label>
         </button>
       </div>
       </div>
@@ -80,6 +86,7 @@ export default {
   },
   methods: {
     isSelected(value) {
+      //console.log(value)
       return this.value === value;
     },
     closeDropdown() {
@@ -89,6 +96,7 @@ export default {
       this.isOpen = true;
     },
     select(value) {
+      console.log(value)
       this.isOpen = false;
       this.$emit('valueSelect', value);
     }

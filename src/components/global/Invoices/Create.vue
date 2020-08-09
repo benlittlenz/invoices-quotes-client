@@ -1,141 +1,8 @@
+<template>
 <div class="antialiased sans-serif min-h-screen bg-white" style="min-height: 900px">
-	<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js" defer></script>
-	<style>
-		[x-cloak] {
-			display: none;
-		}
-
-		@media print {
-			.no-printme  {
-				display: none;
-			}
-			.printme  {
-				display: block;
-			}
-			body {
-				line-height: 1.2;
-			}
-		}
-
-		@page {
-			size: A4 portrait;
-			counter-increment: page;
-		}
-
-		/* Datepicker */
-		.date-input {
-			background-color: #fff;
-			border-radius: 10px;
-			padding: 0.5rem 1rem;
-			z-index: 2000;
-			margin: 3px 0 0 0;
-			border-top: 1px solid #eee;
-			box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-				0 4px 6px -2px rgba(0, 0, 0, 0.05);
-		}
-		.date-input.is-hidden {
-			display: none;
-		}
-		.date-input .pika-title {
-			padding: 0.5rem;
-			width: 100%;
-			text-align: center;
-		}
-		.date-input .pika-prev,
-		.date-input .pika-next {
-			margin-top: 0;
-			/* margin-top: 0.5rem; */
-			padding: 0.2rem 0;
-			cursor: pointer;
-			color: #4299e1;
-			text-transform: uppercase;
-			font-size: 0.85rem;
-		}
-		.date-input .pika-prev:hover,
-		.date-input .pika-next:hover {
-			text-decoration: underline;
-		}
-		.date-input .pika-prev {
-			float: left;
-		}
-		.date-input .pika-next {
-			float: right;
-		}
-		.date-input .pika-label {
-			display: inline-block;
-			font-size: 0;
-		}
-		.date-input .pika-select-month,
-		.date-input .pika-select-year {
-			display: inline-block;
-			border: 1px solid #ddd;
-			color: #444;
-			background-color: #fff;
-			border-radius: 10px;
-			font-size: 0.9rem;
-			padding-left: 0.5em;
-			padding-right: 0.5em;
-			padding-top: 0.25em;
-			padding-bottom: 0.25em;
-			appearance: none;
-		}
-		.date-input .pika-select-month:focus,
-		.date-input .pika-select-year:focus {
-			border-color: #cbd5e0;
-			outline: none;
-		}
-		.date-input .pika-select-month {
-			margin-right: 0.25em;
-		}
-		.date-input table {
-			width: 100%;
-			border-collapse: collapse;
-			margin-bottom: 0.2rem;
-		}
-		.date-input table th {
-			width: 2em;
-			height: 2em;
-			font-weight: normal;
-			color: #718096;
-			text-align: center;
-		}
-		.date-input table th abbr {
-			text-decoration: none;
-		}
-		.date-input table td {
-			padding: 2px;
-		}
-		.date-input table td button {
-			/* border: 1px solid #e2e8f0; */
-			width: 1.8em;
-			height: 1.8em;
-			text-align: center;
-			color: #555;
-			border-radius: 10px;
-		}
-		.date-input table td button:hover {
-			background-color: #bee3f8;
-		}
-		.date-input table td.is-today button {
-			background-color: #ebf8ff;
-		}
-		.date-input table td.is-selected button {
-			background-color: #3182ce;
-		}
-		.date-input table td.is-selected button {
-			color: white;
-		}
-		.date-input table td.is-selected button:hover {
-			color: white;
-		}
-	</style>
-
-	<div class="border-t-8 border-gray-700 h-2"></div>
+<div class="border-t-8 border-gray-700 h-2"></div>
 	<div 
 		class="container mx-auto py-6 px-4"
-		x-data="invoices()"
-		x-init="generateInvoiceNumber(111111, 999999);"
-		x-cloak
 	>
 		<div class="flex justify-between">
 			<h2 class="text-2xl font-bold mb-6 pb-2 tracking-wider uppercase">Invoice</h2>
@@ -212,7 +79,6 @@
 						</button>
 					</div>
 				</div>
-				
 			</div>
 		</div>
 
@@ -259,31 +125,18 @@
 			<div class="px-1 w-20 text-center">
 			</div>
 		</div>
-	    <template x-for="invoice in items" :key="invoice.id">
-			<div class="flex -mx-1 py-2 border-b">
-				<div class="flex-1 px-1">
-					<p class="text-gray-800" x-text="invoice.name"></p>
-				</div>
-
-				<div class="px-1 w-20 text-right">
-					<p class="text-gray-800" x-text="invoice.qty"></p>
-				</div>
-
-				<div class="px-1 w-32 text-right">
-					<p class="text-gray-800" x-text="numberFormat(invoice.rate)"></p>
-				</div>
-
-				<div class="px-1 w-32 text-right">
-					<p class="text-gray-800" x-text="numberFormat(invoice.total)"></p>
-				</div>
-
-				<div class="px-1 w-20 text-right">
-					<a href="#" class="text-red-500 hover:text-red-600 text-sm font-semibold" >Delete</a>
-				</div>
-			</div>
-		</template>
-
-		<button class="mt-6 bg-white hover:bg-gray-100 text-gray-700 font-semibold py-2 px-4 text-sm border border-gray-300 rounded shadow-sm" x-on:click="openModal = !openModal">
+	    <Item
+			v-for="(item, index) in invoiceItems"
+			:key="item.id"
+			:index="index"
+			:item-data="item"
+			:invoice-items="invoiceItems"
+			@update="updateItem"
+		>
+		</Item>
+		<button 
+            class="mt-6 bg-white hover:bg-gray-100 text-gray-700 font-semibold py-2 px-4 text-sm border border-gray-300 rounded shadow-sm" 
+            @click="addItem">
 			Add Invoice Items
 		</button>
 
@@ -309,10 +162,6 @@
 					</div>
 				</div>
 			</div>
-		</div>
-
-		<div class="py-10 text-center">
-			<p class="text-gray-600">Created by <a class="text-blue-600 hover:text-blue-500 border-b-2 border-blue-200 hover:border-blue-300" href="https://twitter.com/mithicher">@mithicher</a>. Built with <a class="text-blue-600 hover:text-blue-500 border-b-2 border-blue-200 hover:border-blue-300" href="https://tailwindcss.com/">tailwindCSS</a> and <a href="https://github.com/alpinejs/alpine" class="text-blue-600 hover:text-blue-500 border-b-2 border-blue-200 hover:border-blue-300">AlpineJS</a>. SVG icons from <a href="https://github.com/tabler/tabler-icons" class="text-blue-600 hover:text-blue-500 border-b-2 border-blue-200 hover:border-blue-300">Tabler Icons</a>.</p>
 		</div>
 
 		<!-- Print Template -->
@@ -388,7 +237,7 @@
 					</p>
 				</div>
 			</div>
-			<template x-for="invoice in items" :key="invoice.id">
+			<template :key="">
 				<div class="flex flex-wrap -mx-1 py-2 border-b">
 					<div class="flex-1 px-1">
 						<p class="text-gray-800" x-text="invoice.name"></p>
@@ -432,85 +281,36 @@
 				</div>
 			</div>
 		</div>
-		<!-- /Print Template -->
+        </div>
+</div>
+</template>
 
-		<!-- Modal -->
-		<div style=" background-color: rgba(0, 0, 0, 0.8)" class="fixed z-40 top-0 right-0 left-0 bottom-0 h-full w-full" x-show.transition.opacity="openModal">
-			<div class="p-4 max-w-xl mx-auto relative absolute left-0 right-0 overflow-hidden mt-24">
-				<div class="shadow absolute right-0 top-0 w-10 h-10 rounded-full bg-white text-gray-500 hover:text-gray-800 inline-flex items-center justify-center cursor-pointer"
-					x-on:click="openModal = !openModal">
-					<svg class="fill-current w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-						<path
-							d="M16.192 6.344L11.949 10.586 7.707 6.344 6.293 7.758 10.535 12 6.293 16.242 7.707 17.656 11.949 13.414 16.192 17.656 17.606 16.242 13.364 12 17.606 7.758z" />
-					</svg>
-				</div>
-
-				<div class="shadow w-full rounded-lg bg-white overflow-hidden w-full block p-8">
-					
-					<h2 class="font-bold text-2xl mb-6 text-gray-800 border-b pb-2">Fill your services</h2>
-				 
-					<div class="mb-4">
-						<label class="text-gray-800 block mb-1 font-bold text-sm uppercase tracking-wide">Description</label>
-						<input class="mb-1 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" id="inline-full-name" type="text" x-model="item.name">
-					</div>
-
-					<div class="flex">
-						<div class="mb-4 w-32 mr-2">
-							<label class="text-gray-800 block mb-1 font-bold text-sm uppercase tracking-wide">Units</label>
-							<input class="text-right mb-1 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" id="inline-full-name" type="text" x-model="item.qty">
-						</div>
-			
-						<div class="mb-4 w-32 mr-2">
-							<label class="text-gray-800 block mb-1 font-bold text-sm uppercase tracking-wide">Unit Price</label>
-							<input class="text-right mb-1 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" id="inline-full-name" type="text" x-model="item.rate">
-						</div>
-
-						<div class="mb-4 w-32">
-							<label class="text-gray-800 block mb-1 font-bold text-sm uppercase tracking-wide">Amount</label>
-							<input class="text-right mb-1 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" id="inline-full-name" type="text" x-model="item.total = item.qty * item.rate">
-						</div>
-					</div>
-			
-					<div class="mb-4 w-32"> 
-						<div class="relative">
-							<label class="text-gray-800 block mb-1 font-bold text-sm uppercase tracking-wide">GST</label>
-							<select class="text-gray-700 block appearance-none w-full bg-gray-200 border-2 border-gray-200 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-blue-500" x-model="item.gst">
-								<option value="5">GST 5%</option>
-								<option value="12">GST 12%</option>
-								<option value="18">GST 18%</option>
-								<option value="28">GST 28%</option>
-							</select>
-							<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-600">
-								<svg class="fill-current h-4 w-4 mt-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-							</div>
-						</div>
-					</div>
-	
-					<div class="mt-8 text-right">
-						<button type="button" class="bg-white hover:bg-gray-100 text-gray-700 font-semibold py-2 px-4 border border-gray-300 rounded shadow-sm mr-2" @click="openModal = !openModal">
-							Cancel
-						</button>	
-						<button type="button" class="bg-gray-800 hover:bg-gray-700 text-white font-semibold py-2 px-4 border border-gray-700 rounded shadow-sm" @click="addItem()">
-							Add Item
-						</button>	
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- /Modal -->
-
-	</div>
 	<script>
+	import axios from 'axios'
+  	import { mapGetters, mapActions } from 'vuex'
+	import Guid from 'guid'
+	import InvoiceStub from '../../../stub/invoice'
+
+    import Item from './Item'
+
     export default {
+        components: {
+			Item
+        },
+
         data() {
             return {
-                items: [],
+				loading: true,
+                invoiceItems: [{
+					...InvoiceStub,
+					id: Guid.raw()
+				}],
                 invoiceNumber: 0,
                 invoiceData: '',
                 invoiceDueDate: '',
 				totalGST: 0,
 				netTotal: 0,
-
+				itemCount: 0,
                 item: {
 					id: '',
 					name: '',
@@ -520,60 +320,43 @@
 					gst: 18
 				},
 
-				billing: {
-					name: '',
-					address: '',
-					extra: ''
-				},
-				from: {
-					name: '',
-					address: '',
-					extra: ''
-				},
-
 				showTooltip: false,
 				showTooltip2: false,
 				openModal: false,
+
+                selectedWrestler: '',
+                
             }
-        } 
+        },
+
+		watch: {
+			item: {
+				handler: 'updateItem',
+				deep: true
+			},
+		},
+
+        methods: {
+            addItem() {
+                this.invoiceItems.push({
+                    ...InvoiceStub,
+					id: Guid.raw()
+                })
+				
+            },
+
+			updateItem (data) {
+				console.log('update', data)
+				Object.assign(this.invoiceItems[data.index], {...data.item})
+			},
+
+			onValueSelect(value) {
+				this.invoiceItems.push(value)
+
+				console.log(this.invoiceItems)
+			}
+
+        },
     }
-
-
-
-            	// 			itemTotal() {
-				// 	this.netTotal = this.numberFormat(this.items.length > 0 ? this.items.reduce((result, item) => {
-				// 		return result + item.total;
-				// 	}, 0) : 0);
-				// },
-
-				// itemTotalGST() {
-                //     this.totalGST =  this.numberFormat(this.items.length > 0 ? this.items.reduce((result, item) => {
-				// 		return result + (item.gst * item.qty);
-				// 	}, 0) : 0);
-				// },
-
-				// calculateGST(GSTPercentage, itemRate) {
-				// 	return this.numberFormat((itemRate - (itemRate * (100 / (100 + GSTPercentage)))).toFixed(2));
-				// },
-
-				// generateUUID() {
-				// 	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-				// 		var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-				// 		return v.toString(16);
-				// 	});
-				// },
-
-                // 				generateInvoiceNumber(minimum, maximum) {
-				// 	const randomNumber = Math.floor(Math.random() * (maximum - minimum)) + minimum;
-				// 	this.invoiceNumber = '#INV-'+ randomNumber;
-				// },
-
-				// numberFormat(amount) {
-				// 	return amount.toLocaleString("en-US", {
-				// 		style: "currency",
-				// 		currency: "INR"
-				// 	});
-				// },
 	</script>
-
 

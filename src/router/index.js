@@ -9,7 +9,7 @@ import JobModal from '../components/global/Jobs/JobModal'
 import TimesheetIndex from '../components/global/Timesheets/TimesheetIndex'
 import QuoteIndex from '../components/global/Quotes/QuoteIndex'
 import InvoiceIndex from '../components/global/Invoices/InvoiceIndex'
-import InvoiceIndex from '../components/global/Invoices/Create'
+import InvoiceCreate from '../components/global/Invoices/Create'
 
 Vue.use(VueRouter)
 
@@ -63,7 +63,7 @@ const routes = [
   {
     path: '/invoices/create',
     name: 'invoices create',
-    component: InvoiceIndex
+    component: InvoiceCreate
   },
 ]
 
