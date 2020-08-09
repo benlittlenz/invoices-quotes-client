@@ -5,3 +5,20 @@
 body {
     @apply p-6 bg-gray-200;
 }
+
+.list-add-button {
+    display: flex;
+    width: 100%;
+    padding: 13px 10px;
+    background: gray;
+    justify-content: center;
+    border: none;
+    outline: none;
+    align-items: center;
+
+    label {
+        font-size: 14px;
+        margin: 0 0 0 10px !important;
+        line-height: 14px;
+    }
+}

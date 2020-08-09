@@ -26,6 +26,7 @@ export default {
                     ...query
                 }
             });
+            console.log(res)
             commit('PUSH_QUOTES', res.data.data)
             return res;
         }

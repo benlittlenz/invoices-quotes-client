@@ -26,6 +26,7 @@ export default {
                     ...query
                 }
             });
+            console.log(res)
             commit('PUSH_INVOICES', res.data.data)
             return res;
         }

@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 import auth from './auth'
 import jobs from './jobs'
 import timesheets from './timesheets'
+import quotes from './quotes'
+import invoices from './invoices'
 
 Vue.use(Vuex)
 
@@ -10,6 +12,8 @@ export default new Vuex.Store({
   modules: {
     auth,
     jobs,
-    timesheets
+    timesheets,
+    quotes,
+    invoices
   }
 })
