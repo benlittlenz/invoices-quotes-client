@@ -125,13 +125,13 @@
 			<div class="px-1 w-20 text-center">
 			</div>
 		</div>
-		<draggable v-model="invoiceItems">
+		<draggable v-model="newInvoice.items">
 			<Item
-				v-for="(item, index) in invoiceItems"
+				v-for="(item, index) in newInvoice.items"
 				:key="item.id"
 				:index="index"
 				:item-data="item"
-				:invoice-items="invoiceItems"
+				:invoice-items="newInvoice.items"
 				@update="updateItem"
 				@remove="removeItem"
 			/>
@@ -293,6 +293,7 @@
 	import draggable from 'vuedraggable'
   	import { mapGetters, mapActions } from 'vuex'
 	import Guid from 'guid'
+	import moment from 'moment'
 	import InvoiceStub from '../../../stub/invoice'
 
     import Item from './Item'
@@ -306,30 +307,28 @@
         data() {
             return {
 				loading: true,
-                invoiceItems: [{
-					...InvoiceStub,
-					id: Guid.raw()
-				}],
-                invoiceNumber: 0,
-                invoiceData: '',
-                invoiceDueDate: '',
-				totalGST: 0,
-				netTotal: 0,
-				itemCount: 0,
-                item: {
-					id: '',
-					name: '',
-					qty: 0,
-					rate: 0,
-					total: 0,
-					gst: 18
+				newInvoice: {
+					invoice_date: null,
+					due_date: null,
+					invoiceNumber: 0,
+					customer_id: null,
+					invoice_template_id: 1,
+					sub_total: null,
+					total: null,
+					tax: null,
+					notes: null,
+					discount_type: 'fixed',
+					discount_val: 0,
+					discount: 0,
+					reference_number: null,
+					items: [{
+						...InvoiceStub,
+						id: Guid.raw()
+					}],
 				},
-
 				showTooltip: false,
 				showTooltip2: false,
 				openModal: false,
-
-                selectedWrestler: '',
                 
             }
         },
@@ -342,8 +341,12 @@
 		},
 
         methods: {
+
+			...mapActions({
+				createInvoice: 'invoices/createInvoice'
+			}), 
             addItem() {
-                this.invoiceItems.push({
+                this.newInvoice.items.push({
                     ...InvoiceStub,
 					id: Guid.raw()
                 })
@@ -351,17 +354,32 @@
 
 			updateItem (data) {
 				console.log('update', data)
-				Object.assign(this.invoiceItems[data.index], {...data.item})
+				Object.assign(this.newInvoice.items[data.index], {...data.item})
 			},
 
 			removeItem (index) {
-				this.invoiceItems.splice(index, 1)
+				this.newInvoice.items.splice(index, 1)
 			},
 
 			onValueSelect(value) {
-				this.invoiceItems.push(value)
+				this.newInvoice.items.push(value)
 
-				console.log(this.invoiceItems)
+				console.log(this.newInvoice.items)
+			},
+
+			submitInvoiceData() {
+				let data = {
+					...this.newInvoice,
+					invoice_date: '07/08/2020',
+					due_date: '07/08/2020',
+					sub_total: 1,
+					total: 2,
+					tax: 1,
+					company_id: 1,
+					invoice_template_id: ''
+				}
+
+				this.createInvoice({data})
 			}
 
         },
