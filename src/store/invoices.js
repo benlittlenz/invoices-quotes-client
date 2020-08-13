@@ -39,7 +39,7 @@ export default {
             console.log("DATA", data)
             commit('CREATE_INVOICE', { data })
 
-            return await axios.post('/api/invoices', data)
+            return await axios.post('/api/invoice', data)
         }
     }
 }

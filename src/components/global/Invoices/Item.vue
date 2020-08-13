@@ -72,7 +72,7 @@ export default {
             this.item.price = value.price
             this.item.item_id = value.id
             this.item.description = value.description
-            this.item.unit = value.unit
+            //this.item.unit = value.unit
 
             this.$emit('itemSelected', value);
 

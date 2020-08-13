@@ -285,6 +285,9 @@
 			</div>
 		</div>
         </div>
+
+
+		<button @click="submitInvoiceData">Click me</button>
 </div>
 </template>
 
@@ -311,7 +314,7 @@
 					invoice_date: null,
 					due_date: null,
 					invoiceNumber: 0,
-					customer_id: null,
+					customer_id: 1,
 					invoice_template_id: 1,
 					sub_total: null,
 					total: null,
@@ -323,7 +326,7 @@
 					reference_number: null,
 					items: [{
 						...InvoiceStub,
-						id: Guid.raw()
+						//id: Guid.raw()
 					}],
 				},
 				showTooltip: false,
@@ -348,7 +351,7 @@
             addItem() {
                 this.newInvoice.items.push({
                     ...InvoiceStub,
-					id: Guid.raw()
+					//id: Guid.raw()
                 })
             },
 
@@ -370,15 +373,15 @@
 			submitInvoiceData() {
 				let data = {
 					...this.newInvoice,
-					invoice_date: '07/08/2020',
-					due_date: '07/08/2020',
+					invoice_date: moment().format('DD/MM/YYYY'),
+					due_date: moment().format('DD/MM/YYYY'),
 					sub_total: 1,
 					total: 2,
 					tax: 1,
 					company_id: 1,
 					invoice_template_id: ''
 				}
-
+				//console.log('DATA', data)
 				this.createInvoice({data})
 			}
 
