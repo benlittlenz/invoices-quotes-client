@@ -50,7 +50,12 @@
 					<label class="w-32 text-gray-800 block font-bold text-sm uppercase tracking-wide">Invoice Date</label>
 					<span class="mr-4 inline-block hidden md:block">:</span>
 					<div class="flex-1">
-					<input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-48 py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500 js-datepicker" type="text" id="datepicker1" placeholder="eg. 17 Feb, 2020" x-model="invoiceDate" x-on:change="invoiceDate = document.getElementById('datepicker1').value" autocomplete="off" readonly>
+				<date-picker
+					v-model="newInvoice.invoice_date"
+					format="DD/MM/YYYY"
+					valueType="format"
+					placeholder="Select invoice date"
+				></date-picker>
 					</div>
 				</div>
 
@@ -58,7 +63,12 @@
 					<label class="w-32 text-gray-800 block font-bold text-sm uppercase tracking-wide">Due date</label>
 					<span class="mr-4 inline-block hidden md:block">:</span>
 					<div class="flex-1">
-					<input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-48 py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500 js-datepicker-2" id="datepicker2" type="text" placeholder="eg. 17 Mar, 2020" x-model="invoiceDueDate" x-on:change="invoiceDueDate = document.getElementById('datepicker2').value" autocomplete="off" readonly>
+					<date-picker
+					v-model="newInvoice.due_date"
+					format="DD/MM/YYYY"
+					valueType="format"
+					placeholder="Select due date"
+				></date-picker>
 					</div>
 				</div>
 			</div>
@@ -88,6 +98,8 @@
 				<input class="mb-1 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" id="inline-full-name" type="text" placeholder="Billing company name" x-model="billing.name">
 				<input class="mb-1 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" id="inline-full-name" type="text" placeholder="Billing company address" x-model="billing.address">
 				<input class="mb-1 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" id="inline-full-name" type="text" placeholder="Additional info" x-model="billing.extra">
+			
+			<CustomerSelect />
 			</div>
 			<div class="w-full md:w-1/3">
 				<label class="text-gray-800 block mb-1 font-bold text-sm uppercase tracking-wide">From:</label>
@@ -294,17 +306,22 @@
 	<script>
 	import axios from 'axios'
 	import draggable from 'vuedraggable'
+	import DatePicker from 'vue2-datepicker';
+  	import 'vue2-datepicker/index.css';
   	import { mapGetters, mapActions } from 'vuex'
 	import Guid from 'guid'
 	import moment from 'moment'
 	import InvoiceStub from '../../../stub/invoice'
 
     import Item from './Item'
+    import CustomerSelect from './CustomerSelect'
 
     export default {
         components: {
 			Item,
-			draggable
+			draggable,
+			DatePicker,
+			CustomerSelect
         },
 
         data() {

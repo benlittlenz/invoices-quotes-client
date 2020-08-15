@@ -31,7 +31,6 @@
           aria-labelledby="listbox-label" 
           aria-activedescendant="listbox-item-3" 
           class="rounded-md py-1 text-base leading-6 shadow-xs overflow-auto focus:outline-none sm:text-sm sm:leading-5 h-56">
-
           <!--
             Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
             Highlighted: "text-white bg-indigo-600", Not Highlighted: "text-gray-900"
