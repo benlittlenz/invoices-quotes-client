@@ -6,6 +6,7 @@ import timesheets from './timesheets'
 import quotes from './quotes'
 import invoices from './invoices'
 import items from './items'
+import customers from './customers'
 
 Vue.use(Vuex)
 
@@ -16,6 +17,7 @@ export default new Vuex.Store({
     timesheets,
     quotes,
     invoices,
-    items
+    items,
+    customers
   }
 })
